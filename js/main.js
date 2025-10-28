@@ -49,9 +49,25 @@ document.querySelectorAll('[data-aos]').forEach(el => {
     observer.observe(el);
 });
 
+// Calculate years of experience dynamically from 2020.09
+function calculateYearsExperience() {
+    const startDate = new Date('2020-09-01');
+    const currentDate = new Date();
+    const diffTime = Math.abs(currentDate - startDate);
+    const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25); // Account for leap years
+    return Math.floor(diffYears);
+}
+
 // Animated counter for stats
 function animateCounter(element) {
-    const target = parseInt(element.dataset.target);
+    let target = parseInt(element.dataset.target);
+
+    // Special handling for years experience - calculate dynamically
+    if (element.classList.contains('years-experience')) {
+        target = calculateYearsExperience();
+        element.dataset.target = target;
+    }
+
     const duration = 2000; // 2 seconds
     const step = target / (duration / 16); // 60fps
     let current = 0;
@@ -279,6 +295,182 @@ if ('IntersectionObserver' in window) {
     document.querySelectorAll('img[data-src]').forEach(img => {
         imageObserver.observe(img);
     });
+}
+
+// Creative: Animated gradient background that follows mouse
+document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+
+    document.body.style.background = `
+        radial-gradient(circle at ${x}% ${y}%,
+            rgba(255, 255, 255, 0.02) 0%,
+            rgba(0, 0, 0, 1) 50%)
+    `;
+});
+
+// Creative: Text glitch effect on hero title
+function glitchEffect(element) {
+    const originalText = element.textContent;
+    const chars = '!<>-_\\/[]{}—=+*^?#________';
+
+    let iteration = 0;
+    const interval = setInterval(() => {
+        element.textContent = originalText
+            .split('')
+            .map((char, index) => {
+                if (index < iteration) {
+                    return originalText[index];
+                }
+                return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join('');
+
+        if (iteration >= originalText.length) {
+            clearInterval(interval);
+        }
+
+        iteration += 1 / 3;
+    }, 30);
+}
+
+// Apply glitch on hero title hover
+const heroTitle = document.querySelector('.hero-content h1');
+if (heroTitle) {
+    heroTitle.addEventListener('mouseenter', () => {
+        glitchEffect(heroTitle);
+    });
+}
+
+// Creative: Floating animation for cards
+document.querySelectorAll('.education-card, .soft-skill-card').forEach((card, index) => {
+    card.style.animation = `float ${3 + index * 0.5}s ease-in-out infinite`;
+    card.style.animationDelay = `${index * 0.2}s`;
+});
+
+// Add float keyframe
+const floatStyle = document.createElement('style');
+floatStyle.textContent = `
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+    }
+
+    @keyframes colorShift {
+        0%, 100% { filter: hue-rotate(0deg); }
+        50% { filter: hue-rotate(20deg); }
+    }
+`;
+document.head.appendChild(floatStyle);
+
+// Creative: Magnetic effect on buttons
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0) scale(1)';
+    });
+});
+
+// Creative: Skill tags appear with stagger effect
+const skillTags = document.querySelectorAll('.skill-tag, .tag');
+skillTags.forEach((tag, index) => {
+    tag.style.opacity = '0';
+    tag.style.transform = 'translateY(20px) scale(0.8)';
+
+    setTimeout(() => {
+        tag.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        tag.style.opacity = '1';
+        tag.style.transform = 'translateY(0) scale(1)';
+    }, 100 + index * 30);
+});
+
+// Creative: Parallax effect on section backgrounds
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((section, index) => {
+        const speed = (index % 2 === 0) ? 0.5 : -0.3;
+        const yPos = -(window.pageYOffset * speed);
+        section.style.backgroundPosition = `center ${yPos}px`;
+    });
+});
+
+// Creative: Timeline items reveal with draw effect
+const timelineLines = document.querySelectorAll('.timeline::before');
+const timelineObserverCreative = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.animation = 'drawLine 2s ease-out forwards';
+        }
+    });
+}, { threshold: 0.1 });
+
+// Creative: Color shift on cards when hovering
+document.querySelectorAll('.project-card, .education-card, .soft-skill-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.animation = 'colorShift 2s ease-in-out infinite';
+        card.style.boxShadow = '0 20px 60px rgba(255, 255, 255, 0.15)';
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.animation = '';
+        card.style.boxShadow = '';
+    });
+});
+
+// Creative: Text reveal on scroll
+document.querySelectorAll('p, li, h3, h4').forEach(element => {
+    const text = element.textContent;
+    if (text && text.length < 200) { // Only for shorter texts to avoid performance issues
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.revealed) {
+                    entry.target.style.opacity = '0';
+                    setTimeout(() => {
+                        entry.target.style.transition = 'opacity 0.8s ease-out';
+                        entry.target.style.opacity = '1';
+                        entry.target.dataset.revealed = 'true';
+                    }, 50);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(element);
+    }
+});
+
+// Creative: Dynamic particle color based on scroll position
+let hueRotation = 0;
+window.addEventListener('scroll', () => {
+    hueRotation = (window.pageYOffset / 10) % 360;
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) {
+        canvas.style.filter = `hue-rotate(${hueRotation}deg) brightness(1.2)`;
+    }
+});
+
+// Creative: Contact section pulse effect
+const contactSection = document.getElementById('contact');
+if (contactSection) {
+    const contactObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const ctaBox = entry.target.querySelector('.cta-box');
+                if (ctaBox) {
+                    ctaBox.style.animation = 'pulse 2s ease-in-out 3';
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    contactObserver.observe(contactSection);
 }
 
 // Log loaded message
