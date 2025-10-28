@@ -65,9 +65,9 @@ class ParticleNetwork {
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < this.maxDistance) {
-                    const opacity = (1 - distance / this.maxDistance) * 0.5;
-                    this.ctx.strokeStyle = `rgba(0, 255, 255, ${opacity})`;
-                    this.ctx.lineWidth = 1;
+                    const opacity = (1 - distance / this.maxDistance) * 0.3;
+                    this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                    this.ctx.lineWidth = 0.5;
                     this.ctx.beginPath();
                     this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
                     this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
@@ -128,15 +128,15 @@ class Particle {
     }
 
     draw(ctx) {
-        ctx.fillStyle = 'rgba(0, 255, 255, 0.8)';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
 
         // Glow effect
         const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 3);
-        gradient.addColorStop(0, 'rgba(0, 255, 255, 0.3)');
-        gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);

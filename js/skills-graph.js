@@ -10,47 +10,47 @@ class SkillsGraph {
         // Skills data with connections
         this.nodes = [
             // Core skills - larger nodes
-            { id: 'UVM', group: 1, size: 25, color: '#00ffff' },
-            { id: 'SystemVerilog', group: 1, size: 25, color: '#00ffff' },
-            { id: 'Python', group: 2, size: 25, color: '#00ff88' },
-            { id: 'Docker', group: 3, size: 20, color: '#00ff88' },
+            { id: 'UVM', group: 1, size: 25, color: '#ffffff' },
+            { id: 'SystemVerilog', group: 1, size: 25, color: '#ffffff' },
+            { id: 'Python', group: 2, size: 25, color: '#e5e5e5' },
+            { id: 'Docker', group: 3, size: 20, color: '#e5e5e5' },
 
             // Verification
-            { id: 'I2C/I3C', group: 1, size: 15, color: '#00ffff' },
-            { id: 'SMBus', group: 1, size: 15, color: '#00ffff' },
-            { id: 'ASIC', group: 1, size: 18, color: '#00ffff' },
-            { id: 'Ethernet', group: 1, size: 18, color: '#00ffff' },
+            { id: 'I2C/I3C', group: 1, size: 15, color: '#ffffff' },
+            { id: 'SMBus', group: 1, size: 15, color: '#ffffff' },
+            { id: 'ASIC', group: 1, size: 18, color: '#ffffff' },
+            { id: 'Ethernet', group: 1, size: 18, color: '#ffffff' },
 
             // Programming & Tools
-            { id: 'JavaScript', group: 2, size: 18, color: '#00ff88' },
-            { id: 'Shell Script', group: 2, size: 18, color: '#00ff88' },
-            { id: 'Perl', group: 2, size: 12, color: '#00ff88' },
-            { id: 'PHP', group: 2, size: 12, color: '#00ff88' },
+            { id: 'JavaScript', group: 2, size: 18, color: '#e5e5e5' },
+            { id: 'Shell Script', group: 2, size: 18, color: '#e5e5e5' },
+            { id: 'Perl', group: 2, size: 12, color: '#cccccc' },
+            { id: 'PHP', group: 2, size: 12, color: '#cccccc' },
 
             // Web & Data
-            { id: 'D3.js', group: 2, size: 15, color: '#ff00ff' },
-            { id: 'HTML/CSS', group: 2, size: 12, color: '#ff00ff' },
-            { id: 'Ionic', group: 2, size: 12, color: '#ff00ff' },
+            { id: 'D3.js', group: 2, size: 15, color: '#d0d0d0' },
+            { id: 'HTML/CSS', group: 2, size: 12, color: '#cccccc' },
+            { id: 'Ionic', group: 2, size: 12, color: '#cccccc' },
 
             // Infrastructure
-            { id: 'Microservices', group: 3, size: 18, color: '#00ff88' },
-            { id: 'CI/CD', group: 3, size: 15, color: '#00ff88' },
-            { id: 'Apache', group: 3, size: 12, color: '#00ff88' },
-            { id: 'nginx', group: 3, size: 12, color: '#00ff88' },
+            { id: 'Microservices', group: 3, size: 18, color: '#e5e5e5' },
+            { id: 'CI/CD', group: 3, size: 15, color: '#d0d0d0' },
+            { id: 'Apache', group: 3, size: 12, color: '#cccccc' },
+            { id: 'nginx', group: 3, size: 12, color: '#cccccc' },
 
             // Networking
-            { id: 'SDN', group: 4, size: 15, color: '#ff00ff' },
-            { id: 'WireShark', group: 4, size: 12, color: '#ff00ff' },
-            { id: 'Socket', group: 4, size: 12, color: '#ff00ff' },
+            { id: 'SDN', group: 4, size: 15, color: '#d0d0d0' },
+            { id: 'WireShark', group: 4, size: 12, color: '#cccccc' },
+            { id: 'Socket', group: 4, size: 12, color: '#cccccc' },
 
             // ML & Data
-            { id: 'ML', group: 5, size: 18, color: '#ff00ff' },
-            { id: 'scikit-learn', group: 5, size: 12, color: '#ff00ff' },
-            { id: 'flask', group: 5, size: 12, color: '#ff00ff' },
+            { id: 'ML', group: 5, size: 18, color: '#d0d0d0' },
+            { id: 'scikit-learn', group: 5, size: 12, color: '#cccccc' },
+            { id: 'flask', group: 5, size: 12, color: '#cccccc' },
 
             // Python libs
-            { id: 'pymongo', group: 5, size: 10, color: '#a0aec0' },
-            { id: 'ZMQ', group: 5, size: 10, color: '#a0aec0' },
+            { id: 'pymongo', group: 5, size: 10, color: '#b0b0b0' },
+            { id: 'ZMQ', group: 5, size: 10, color: '#b0b0b0' },
         ];
 
         this.links = [
@@ -125,9 +125,9 @@ class SkillsGraph {
             .data(this.links)
             .enter()
             .append('line')
-            .attr('stroke', '#00ffff')
-            .attr('stroke-opacity', d => 0.2 + d.strength * 0.2)
-            .attr('stroke-width', d => d.strength);
+            .attr('stroke', '#ffffff')
+            .attr('stroke-opacity', d => 0.1 + d.strength * 0.15)
+            .attr('stroke-width', d => d.strength * 0.8);
 
         // Create nodes
         this.node = this.svg.append('g')
@@ -145,8 +145,8 @@ class SkillsGraph {
             .attr('r', d => d.size)
             .attr('fill', d => d.color)
             .attr('stroke', '#fff')
-            .attr('stroke-width', 2)
-            .style('filter', 'drop-shadow(0 0 10px currentColor)');
+            .attr('stroke-width', 1)
+            .style('filter', 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.3))');
 
         // Add labels to nodes
         this.node.append('text')
