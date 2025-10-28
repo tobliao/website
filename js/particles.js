@@ -4,9 +4,9 @@ class ParticleNetwork {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.particles = [];
-        this.particleCount = 80;
-        this.maxDistance = 150;
-        this.mouse = { x: null, y: null, radius: 200 };
+        this.particleCount = 50; // Reduced from 80 for better performance
+        this.maxDistance = 120; // Reduced for cleaner look
+        this.mouse = { x: null, y: null, radius: 150 };
 
         this.resize();
         this.init();
@@ -35,9 +35,9 @@ class ParticleNetwork {
             this.particles.push(new Particle(
                 Math.random() * this.canvas.width,
                 Math.random() * this.canvas.height,
-                Math.random() * 2 - 1,
-                Math.random() * 2 - 1,
-                Math.random() * 2 + 1
+                (Math.random() - 0.5) * 1.5, // Reduced speed for smoother motion
+                (Math.random() - 0.5) * 1.5,
+                Math.random() * 1.5 + 0.8 // Smaller particles
             ));
         }
     }
