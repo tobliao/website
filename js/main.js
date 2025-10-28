@@ -437,19 +437,41 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Creative: Contact section pulse effect
+// Contact section - elegant fade in with scale
 const contactSection = document.getElementById('contact');
 if (contactSection) {
     const contactObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && !entry.target.dataset.animated) {
                 const ctaBox = entry.target.querySelector('.cta-box');
+                const contactItems = entry.target.querySelectorAll('.contact-item');
+
                 if (ctaBox) {
-                    ctaBox.style.animation = 'pulse 2s ease-in-out 3';
+                    ctaBox.style.opacity = '0';
+                    ctaBox.style.transform = 'scale(0.95)';
+
+                    setTimeout(() => {
+                        ctaBox.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                        ctaBox.style.opacity = '1';
+                        ctaBox.style.transform = 'scale(1)';
+                    }, 300);
                 }
+
+                contactItems.forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-20px)';
+
+                    setTimeout(() => {
+                        item.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                    }, index * 150);
+                });
+
+                entry.target.dataset.animated = 'true';
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.3 });
 
     contactObserver.observe(contactSection);
 }

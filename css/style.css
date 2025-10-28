@@ -1173,22 +1173,7 @@ body {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Smooth reveal on scroll */
-.timeline-content,
-.education-card,
-.project-card,
-.soft-skill-card {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.timeline-content.aos-animate,
-.education-card.aos-animate,
-.project-card.aos-animate,
-.soft-skill-card.aos-animate {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* Elements are visible by default - AOS handles animations */
 
 /* Elegant button glow on hover */
 @keyframes pulseGlow {
