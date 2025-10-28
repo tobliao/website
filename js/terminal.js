@@ -15,7 +15,7 @@ class Terminal {
         ];
 
         this.commandsZh = [
-            { cmd: 'whoami', response: '廖育成 (Toby)' },
+            { cmd: 'whoami', response: '廖昱程 (Toby)' },
             { cmd: 'cat 目前職位.txt', response: 'ASIC 設計驗證工程師 @ Cisco Systems' },
             { cmd: 'ls 技能/', response: 'SystemVerilog  UVM  Python  Docker  網路  機器學習' },
             { cmd: 'cat 理念.txt', response: '"教學相長"' },
