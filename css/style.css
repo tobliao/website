@@ -1093,15 +1093,16 @@ body {
     }
 }
 
-/* Cards get animated borders */
+/* Cards get subtle animated borders - more elegant */
 .timeline-content,
 .education-card,
 .project-card,
 .soft-skill-card {
-    animation: borderGlow 3s ease-in-out infinite;
+    animation: borderGlow 4s ease-in-out infinite;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Text shimmer effect */
+/* Subtle elegant shimmer for section titles */
 @keyframes shimmer {
     0% {
         background-position: -1000px 0;
@@ -1114,49 +1115,121 @@ body {
 .section-title {
     background: linear-gradient(
         90deg,
-        var(--text-primary) 0%,
-        var(--primary-color) 40%,
-        var(--text-primary) 50%,
-        var(--primary-color) 60%,
-        var(--text-primary) 100%
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 1) 40%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 1) 60%,
+        rgba(255, 255, 255, 0.8) 100%
     );
     background-size: 2000px 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shimmer 8s linear infinite;
+    animation: shimmer 10s linear infinite;
+    position: relative;
 }
 
-/* Hover lift effect for all cards */
+/* Add elegant underline to section titles */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: expandLine 1s ease-out forwards;
+}
+
+@keyframes expandLine {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 60px;
+        opacity: 1;
+    }
+}
+
+/* Elegant hover lift effect for all cards */
 .timeline-content,
 .education-card,
 .project-card,
 .soft-skill-card,
 .contact-item {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
 }
 
 .timeline-content:hover,
 .education-card:hover,
 .project-card:hover,
 .soft-skill-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 25px 50px rgba(255, 255, 255, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Pulsating glow on hover */
+/* Smooth reveal on scroll */
+.timeline-content,
+.education-card,
+.project-card,
+.soft-skill-card {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.timeline-content.aos-animate,
+.education-card.aos-animate,
+.project-card.aos-animate,
+.soft-skill-card.aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Elegant button glow on hover */
 @keyframes pulseGlow {
     0%, 100% {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
     }
     50% {
-        box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+        box-shadow: 0 8px 30px rgba(255, 255, 255, 0.25);
     }
+}
+
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn:hover {
-    animation: pulseGlow 1.5s ease-in-out infinite;
+    animation: pulseGlow 2s ease-in-out infinite;
+    transform: translateY(-2px);
+}
+
+/* Elegant shine effect on buttons */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 /* Morphing shapes for tags */

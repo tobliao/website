@@ -25,84 +25,65 @@ class Terminal {
 
         this.commands = this.currentLang === 'zh' ? this.commandsZh : this.commandsEn;
         this.currentCommand = 0;
-        this.currentChar = 0;
-        this.isTyping = false;
-        this.typingSpeed = 40; // Faster for smoother feel
-        this.deleteSpeed = 20;
-        this.pauseAfterCommand = 400;
-        this.pauseAfterResponse = 800;
 
         this.start();
     }
 
     start() {
-        setTimeout(() => this.typeCommand(), 1000);
+        setTimeout(() => this.showAllCommands(), 500);
     }
 
-    typeCommand() {
-        if (this.currentCommand >= this.commands.length) {
-            return;
-        }
-
-        this.isTyping = true;
-        const cmd = this.commands[this.currentCommand].cmd;
-
-        if (this.currentChar < cmd.length) {
-            // Batch multiple characters for smoother appearance
-            const charsPerFrame = Math.max(1, Math.floor(cmd.length / 20)); // Type faster for longer commands
-            const endChar = Math.min(this.currentChar + charsPerFrame, cmd.length);
-
-            this.text.textContent = cmd.substring(0, endChar);
-            this.currentChar = endChar;
-
-            if (this.currentChar < cmd.length) {
-                requestAnimationFrame(() => setTimeout(() => this.typeCommand(), this.typingSpeed));
-            } else {
-                setTimeout(() => this.executeCommand(), this.pauseAfterCommand);
-            }
-        } else {
-            setTimeout(() => this.executeCommand(), this.pauseAfterCommand);
-        }
-    }
-
-    executeCommand() {
-        const cmd = this.commands[this.currentCommand].cmd;
-        const response = this.commands[this.currentCommand].response;
-
-        // Add command to output
-        const cmdLine = document.createElement('div');
-        cmdLine.innerHTML = `<span style="color: #00ff88;">$</span> ${cmd}`;
-        this.output.appendChild(cmdLine);
-
-        // Add response to output
-        const responseLine = document.createElement('div');
-        responseLine.textContent = response;
-        responseLine.style.color = '#a0aec0';
-        responseLine.style.marginBottom = '0.5rem';
-        this.output.appendChild(responseLine);
-
-        // Scroll to bottom
-        this.output.scrollTop = this.output.scrollHeight;
-
-        // Clear input
-        this.text.textContent = '';
-        this.currentChar = 0;
-        this.currentCommand++;
-
-        if (this.currentCommand < this.commands.length) {
-            setTimeout(() => this.typeCommand(), this.pauseAfterResponse);
-        } else {
-            // All commands done, hide terminal cursor
+    showAllCommands() {
+        // Show all commands at once with elegant stagger effect instead of typing
+        this.commands.forEach((command, index) => {
             setTimeout(() => {
-                const cursor = document.querySelector('.cursor');
-                if (cursor) cursor.style.display = 'none';
-            }, 1000);
-        }
+                // Add command line
+                const cmdLine = document.createElement('div');
+                cmdLine.innerHTML = `<span style="color: #00ff88;">$</span> ${command.cmd}`;
+                cmdLine.style.opacity = '0';
+                cmdLine.style.transform = 'translateX(-20px)';
+                this.output.appendChild(cmdLine);
+
+                // Smooth fade in with slide
+                requestAnimationFrame(() => {
+                    cmdLine.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
+                    cmdLine.style.opacity = '1';
+                    cmdLine.style.transform = 'translateX(0)';
+                });
+
+                // Add response after short delay
+                setTimeout(() => {
+                    const responseLine = document.createElement('div');
+                    responseLine.textContent = command.response;
+                    responseLine.style.color = '#a0aec0';
+                    responseLine.style.marginBottom = '0.5rem';
+                    responseLine.style.opacity = '0';
+                    responseLine.style.transform = 'translateX(-10px)';
+                    this.output.appendChild(responseLine);
+
+                    requestAnimationFrame(() => {
+                        responseLine.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                        responseLine.style.opacity = '1';
+                        responseLine.style.transform = 'translateX(0)';
+                    });
+
+                    // Scroll to bottom
+                    this.output.scrollTop = this.output.scrollHeight;
+
+                    // Hide cursor after last command
+                    if (index === this.commands.length - 1) {
+                        setTimeout(() => {
+                            const cursor = document.querySelector('.cursor');
+                            if (cursor) cursor.style.display = 'none';
+                        }, 300);
+                    }
+                }, 200);
+            }, index * 600); // Stagger each command-response pair
+        });
     }
 
     updateLanguage(lang) {
-        // Note: Terminal content is already displayed, no need to update it
-        // This method is here for future reference if needed
+        // Terminal already displayed, no need to update
         this.currentLang = lang;
     }
 }

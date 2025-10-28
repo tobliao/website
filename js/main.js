@@ -58,7 +58,7 @@ function calculateYearsExperience() {
     return Math.floor(diffYears);
 }
 
-// Animated counter for stats with easing
+// Animated counter for stats with smooth CSS animation
 function animateCounter(element) {
     let target = parseInt(element.dataset.target);
 
@@ -68,33 +68,46 @@ function animateCounter(element) {
         element.dataset.target = target;
     }
 
-    const duration = 2000; // 2 seconds
+    const duration = 1500; // 1.5 seconds
     const startTime = performance.now();
     const startValue = 0;
 
-    // Easing function for smooth acceleration/deceleration
-    const easeOutExpo = (t) => {
-        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    // Smoother easing function - cubic bezier
+    const easeOutCubic = (t) => {
+        return 1 - Math.pow(1 - t, 3);
     };
 
-    const updateCounter = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
+    // Add a slight delay based on which counter this is
+    const counters = document.querySelectorAll('.stat-number');
+    const index = Array.from(counters).indexOf(element);
+    const delay = index * 100;
 
-        // Apply easing function
-        const easedProgress = easeOutExpo(progress);
-        const current = startValue + (target - startValue) * easedProgress;
+    setTimeout(() => {
+        const updateCounter = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
 
-        element.textContent = Math.floor(current);
+            // Apply smooth easing
+            const easedProgress = easeOutCubic(progress);
+            const current = startValue + (target - startValue) * easedProgress;
 
-        if (progress < 1) {
-            requestAnimationFrame(updateCounter);
-        } else {
-            element.textContent = target; // Ensure final value is exact
-        }
-    };
+            element.textContent = Math.floor(current);
 
-    requestAnimationFrame(updateCounter);
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                element.textContent = target;
+                // Add a subtle scale animation when done
+                element.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    element.style.transition = 'transform 0.3s ease-out';
+                    element.style.transform = 'scale(1)';
+                }, 50);
+            }
+        };
+
+        requestAnimationFrame(updateCounter);
+    }, delay);
 }
 
 // Observe stat numbers
@@ -364,71 +377,33 @@ if (heroTitle) {
     });
 }
 
-// Creative: Floating animation for cards
-document.querySelectorAll('.education-card, .soft-skill-card').forEach((card, index) => {
-    card.style.animation = `float ${3 + index * 0.5}s ease-in-out infinite`;
-    card.style.animationDelay = `${index * 0.2}s`;
-});
+// Removed floating animation - too distracting for elegant design
 
-// Add float keyframe
-const floatStyle = document.createElement('style');
-floatStyle.textContent = `
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-15px); }
-    }
-
-    @keyframes colorShift {
-        0%, 100% { filter: hue-rotate(0deg); }
-        50% { filter: hue-rotate(20deg); }
-    }
-`;
-document.head.appendChild(floatStyle);
-
-// Creative: Magnetic effect on buttons
+// Simplified button hover - elegant and subtle
 document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
+    btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'translateY(-2px)';
     });
 
     btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0, 0) scale(1)';
+        btn.style.transform = 'translateY(0)';
     });
 });
 
-// Creative: Skill tags appear with stagger effect
+// Elegant skill tags reveal with smooth stagger
 const skillTags = document.querySelectorAll('.skill-tag, .tag');
 skillTags.forEach((tag, index) => {
     tag.style.opacity = '0';
-    tag.style.transform = 'translateY(20px) scale(0.8)';
+    tag.style.transform = 'translateY(10px)';
 
     setTimeout(() => {
-        tag.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        tag.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
         tag.style.opacity = '1';
-        tag.style.transform = 'translateY(0) scale(1)';
-    }, 100 + index * 30);
+        tag.style.transform = 'translateY(0)';
+    }, 50 + index * 20);
 });
 
-// Creative: Parallax effect on section backgrounds (throttled)
-let parallaxTicking = false;
-window.addEventListener('scroll', () => {
-    if (!parallaxTicking) {
-        requestAnimationFrame(() => {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach((section, index) => {
-                const speed = (index % 2 === 0) ? 0.5 : -0.3;
-                const yPos = -(window.pageYOffset * speed);
-                section.style.transform = `translateY(${yPos}px)`;
-            });
-            parallaxTicking = false;
-        });
-        parallaxTicking = true;
-    }
-});
+// Removed parallax effect - was causing overlap issues
 
 // Creative: Timeline items reveal with draw effect
 const timelineLines = document.querySelectorAll('.timeline::before');
@@ -440,41 +415,9 @@ const timelineObserverCreative = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-// Creative: Color shift on cards when hovering
-document.querySelectorAll('.project-card, .education-card, .soft-skill-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.animation = 'colorShift 2s ease-in-out infinite';
-        card.style.boxShadow = '0 20px 60px rgba(255, 255, 255, 0.15)';
-    });
+// Removed color shift - keeping it simple and elegant
 
-    card.addEventListener('mouseleave', () => {
-        card.style.animation = '';
-        card.style.boxShadow = '';
-    });
-});
-
-// Creative: Text reveal on scroll (optimized)
-const textRevealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.dataset.revealed) {
-            entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            entry.target.dataset.revealed = 'true';
-            textRevealObserver.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px'
-});
-
-// Only observe direct content elements, not every single text node
-document.querySelectorAll('.about-text p, .timeline-content, .education-card, .project-card, .soft-skill-card').forEach(element => {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    textRevealObserver.observe(element);
-});
+// Removed text reveal - will use AOS animations instead for smoother experience
 
 // Creative: Dynamic particle color based on scroll position (throttled)
 let hueRotation = 0;
