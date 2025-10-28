@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="YuCheng LIAO (Toby) - ASIC Design Verification Engineer">
     <title>YuCheng LIAO (Toby) | Interactive Resume</title>
+    <!-- Google Fonts for bilingual support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600&family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,13 +20,18 @@
         <div class="nav-container">
             <a href="#hero" class="nav-logo">Toby</a>
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about" data-en="About" data-zh="關於">About</a></li>
+                <li><a href="#experience" data-en="Experience" data-zh="經歷">Experience</a></li>
+                <li><a href="#education" data-en="Education" data-zh="學歷">Education</a></li>
+                <li><a href="#projects" data-en="Projects" data-zh="專案">Projects</a></li>
+                <li><a href="#skills" data-en="Skills" data-zh="技能">Skills</a></li>
+                <li><a href="#contact" data-en="Contact" data-zh="聯絡">Contact</a></li>
             </ul>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <span class="lang-divider">/</span>
+                <button class="lang-btn" data-lang="zh">中</button>
+            </div>
         </div>
     </nav>
 
@@ -47,10 +56,10 @@
             <div class="hero-content fade-in">
                 <h1 class="glitch" data-text="YuCheng LIAO">YuCheng LIAO</h1>
                 <h2 class="subtitle">(Toby)</h2>
-                <p class="tagline">ASIC Design Verification Engineer | UVM/SystemVerilog Expert | Effective Communicator & Technical Leader</p>
+                <p class="tagline lang-text" data-en="ASIC Design Verification Engineer | UVM/SystemVerilog Expert | Effective Communicator & Technical Leader" data-zh="ASIC 設計驗證工程師 | UVM/SystemVerilog 專家 | 卓越溝通者與技術領導者">ASIC Design Verification Engineer | UVM/SystemVerilog Expert | Effective Communicator & Technical Leader</p>
                 <div class="hero-cta">
-                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="pdf/YuChengLIAO_Resume.pdf" class="btn btn-secondary" download>Download Resume</a>
+                    <a href="#contact" class="btn btn-primary lang-text" data-en="Get In Touch" data-zh="聯絡我">Get In Touch</a>
+                    <a href="pdf/YuChengLIAO_Resume.pdf" class="btn btn-secondary lang-text" data-en="Download Resume" data-zh="下載履歷" download>Download Resume</a>
                 </div>
             </div>
         </div>
@@ -64,25 +73,25 @@
     <!-- About Section -->
     <section id="about" class="section">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">whoami</h2>
+            <h2 class="section-title lang-text" data-aos="fade-up" data-en="About" data-zh="關於">About</h2>
             <div class="about-content" data-aos="fade-up" data-aos-delay="100">
                 <div class="about-text">
-                    <p>ASIC Design Verification Engineer at <span class="highlight">Cisco Systems</span>, specializing in <span class="highlight">UVM/SystemVerilog</span> methodologies with comprehensive experience in end-to-end verification, test bench design, and ASIC bring-up. Proven track record in delivering complex verification projects across multiple technology domains.</p>
-                    <p>Master's degree from <span class="highlight">The Hong Kong University of Science and Technology (HKUST)</span> in Electronic and Computer Engineering, with research focus on Telecommunications and Network Topology. Visiting Scholar at <span class="highlight">National Taiwan University / TU Delft</span>, collaborating on cutting-edge research in social media fair learning and graph theory applications.</p>
-                    <p><span class="highlight">Strong communicator and technical leader</span> with exceptional ability to bridge technical complexity and business objectives. Experienced in conducting training seminars, leading study groups, and collaborating across international teams without language or timezone barriers. Passionate advocate of knowledge sharing - "Teaching is the best teacher of learning."</p>
+                    <p class="lang-text" data-en="ASIC Design Verification Engineer at Cisco Systems, specializing in UVM/SystemVerilog methodologies with comprehensive experience in end-to-end verification, test bench design, and ASIC bring-up. Proven track record in delivering complex verification projects across multiple technology domains." data-zh="Cisco Systems ASIC 設計驗證工程師，專精於 UVM/SystemVerilog 方法論，擁有端到端驗證、測試平台設計及 ASIC 啟動的全面經驗。在多個技術領域成功交付複雜驗證專案的卓越紀錄。">ASIC Design Verification Engineer at <span class="highlight">Cisco Systems</span>, specializing in <span class="highlight">UVM/SystemVerilog</span> methodologies with comprehensive experience in end-to-end verification, test bench design, and ASIC bring-up. Proven track record in delivering complex verification projects across multiple technology domains.</p>
+                    <p class="lang-text" data-en="Master's degree from The Hong Kong University of Science and Technology (HKUST) in Electronic and Computer Engineering, with research focus on Telecommunications and Network Topology. Visiting Scholar at National Taiwan University / TU Delft, collaborating on cutting-edge research in social media fair learning and graph theory applications." data-zh="香港科技大學電子與計算機工程碩士，研究專注於電信與網路拓撲學。曾任國立台灣大學／荷蘭台夫特理工大學訪問學者，合作進行社交媒體公平學習與圖論應用的前沿研究。">Master's degree from <span class="highlight">The Hong Kong University of Science and Technology (HKUST)</span> in Electronic and Computer Engineering, with research focus on Telecommunications and Network Topology. Visiting Scholar at <span class="highlight">National Taiwan University / TU Delft</span>, collaborating on cutting-edge research in social media fair learning and graph theory applications.</p>
+                    <p class="lang-text" data-en="Strong communicator and technical leader with exceptional ability to bridge technical complexity and business objectives. Experienced in conducting training seminars, leading study groups, and collaborating across international teams without language or timezone barriers. Passionate advocate of knowledge sharing - Teaching is the best teacher of learning." data-zh="優秀的溝通者與技術領導者，具備卓越的能力將技術複雜性與商業目標相結合。擁有豐富的培訓研討會、領導學習小組經驗，能跨越語言與時區障礙與國際團隊協作。熱衷於知識分享 - 「教學相長」。"><span class="highlight">Strong communicator and technical leader</span> with exceptional ability to bridge technical complexity and business objectives. Experienced in conducting training seminars, leading study groups, and collaborating across international teams without language or timezone barriers. Passionate advocate of knowledge sharing - "Teaching is the best teacher of learning."</p>
                 </div>
                 <div class="about-stats">
                     <div class="stat-item">
                         <span class="stat-number" data-target="4">0</span>
-                        <span class="stat-label">Years Experience</span>
+                        <span class="stat-label lang-text" data-en="Years Experience" data-zh="年經驗">Years Experience</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number" data-target="10">0</span>
-                        <span class="stat-label">Major Projects</span>
+                        <span class="stat-label lang-text" data-en="Major Projects" data-zh="主要專案">Major Projects</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number" data-target="20">0</span>
-                        <span class="stat-label">Technologies</span>
+                        <span class="stat-label lang-text" data-en="Technologies" data-zh="技術項目">Technologies</span>
                     </div>
                 </div>
             </div>
@@ -92,7 +101,7 @@
     <!-- Experience Timeline Section -->
     <section id="experience" class="section">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Experience Timeline</h2>
+            <h2 class="section-title lang-text" data-aos="fade-up" data-en="Experience" data-zh="工作經歷">Experience</h2>
             <div class="timeline">
                 <!-- Cisco -->
                 <div class="timeline-item" data-aos="fade-right">
@@ -194,7 +203,7 @@
     <!-- Education Section -->
     <section id="education" class="section">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Education</h2>
+            <h2 class="section-title lang-text" data-aos="fade-up" data-en="Education" data-zh="學歷">Education</h2>
             <div class="education-grid">
                 <div class="education-card" data-aos="zoom-in">
                     <div class="edu-header">
@@ -232,7 +241,7 @@
     <!-- Projects Section -->
     <section id="projects" class="section">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Side Projects & Research</h2>
+            <h2 class="section-title lang-text" data-aos="fade-up" data-en="Projects & Research" data-zh="專案與研究">Projects & Research</h2>
             <div class="projects-grid">
                 <!-- UVM Ethernet VIP -->
                 <div class="project-card" data-aos="flip-left">
@@ -335,7 +344,7 @@
     <!-- Skills Section -->
     <section id="skills" class="section">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Skills & Expertise</h2>
+            <h2 class="section-title lang-text" data-aos="fade-up" data-en="Skills & Expertise" data-zh="技能與專長">Skills & Expertise</h2>
 
             <!-- Soft Skills -->
             <div class="soft-skills-section" data-aos="fade-up" data-aos-delay="100">
@@ -442,7 +451,7 @@
     <!-- Contact Section -->
     <section id="contact" class="section">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
+            <h2 class="section-title lang-text" data-aos="fade-up" data-en="Get In Touch" data-zh="聯絡方式">Get In Touch</h2>
             <div class="contact-content" data-aos="fade-up" data-aos-delay="100">
                 <div class="contact-info">
                     <div class="contact-item">
@@ -494,14 +503,15 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 YuCheng LIAO (Toby). Built with vanilla JavaScript and passion.</p>
-            <p class="footer-quote">"Teaching is the best teacher of learning"</p>
+            <p class="lang-text" data-en="&copy; 2024 YuCheng LIAO (Toby). Built with vanilla JavaScript and passion." data-zh="&copy; 2024 廖育成 (Toby)。以純 JavaScript 與熱情打造。">&copy; 2024 YuCheng LIAO (Toby). Built with vanilla JavaScript and passion.</p>
+            <p class="footer-quote lang-text" data-en='"Teaching is the best teacher of learning"' data-zh='"教學相長"'>"Teaching is the best teacher of learning"</p>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script src="js/particles.js"></script>
     <script src="js/terminal.js"></script>
+    <script src="js/language.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
