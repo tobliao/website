@@ -27,10 +27,10 @@ class Terminal {
         this.currentCommand = 0;
         this.currentChar = 0;
         this.isTyping = false;
-        this.typingSpeed = 80;
-        this.deleteSpeed = 40;
-        this.pauseAfterCommand = 600;
-        this.pauseAfterResponse = 1200;
+        this.typingSpeed = 40; // Faster for smoother feel
+        this.deleteSpeed = 20;
+        this.pauseAfterCommand = 400;
+        this.pauseAfterResponse = 800;
 
         this.start();
     }
@@ -48,9 +48,18 @@ class Terminal {
         const cmd = this.commands[this.currentCommand].cmd;
 
         if (this.currentChar < cmd.length) {
-            this.text.textContent = cmd.substring(0, this.currentChar + 1);
-            this.currentChar++;
-            setTimeout(() => this.typeCommand(), this.typingSpeed);
+            // Batch multiple characters for smoother appearance
+            const charsPerFrame = Math.max(1, Math.floor(cmd.length / 20)); // Type faster for longer commands
+            const endChar = Math.min(this.currentChar + charsPerFrame, cmd.length);
+
+            this.text.textContent = cmd.substring(0, endChar);
+            this.currentChar = endChar;
+
+            if (this.currentChar < cmd.length) {
+                requestAnimationFrame(() => setTimeout(() => this.typeCommand(), this.typingSpeed));
+            } else {
+                setTimeout(() => this.executeCommand(), this.pauseAfterCommand);
+            }
         } else {
             setTimeout(() => this.executeCommand(), this.pauseAfterCommand);
         }

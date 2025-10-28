@@ -58,7 +58,7 @@ function calculateYearsExperience() {
     return Math.floor(diffYears);
 }
 
-// Animated counter for stats
+// Animated counter for stats with easing
 function animateCounter(element) {
     let target = parseInt(element.dataset.target);
 
@@ -69,20 +69,32 @@ function animateCounter(element) {
     }
 
     const duration = 2000; // 2 seconds
-    const step = target / (duration / 16); // 60fps
-    let current = 0;
+    const startTime = performance.now();
+    const startValue = 0;
 
-    const updateCounter = () => {
-        current += step;
-        if (current < target) {
-            element.textContent = Math.floor(current);
+    // Easing function for smooth acceleration/deceleration
+    const easeOutExpo = (t) => {
+        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    };
+
+    const updateCounter = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Apply easing function
+        const easedProgress = easeOutExpo(progress);
+        const current = startValue + (target - startValue) * easedProgress;
+
+        element.textContent = Math.floor(current);
+
+        if (progress < 1) {
             requestAnimationFrame(updateCounter);
         } else {
-            element.textContent = target;
+            element.textContent = target; // Ensure final value is exact
         }
     };
 
-    updateCounter();
+    requestAnimationFrame(updateCounter);
 }
 
 // Observe stat numbers
@@ -297,16 +309,26 @@ if ('IntersectionObserver' in window) {
     });
 }
 
-// Creative: Animated gradient background that follows mouse
-document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth) * 100;
-    const y = (e.clientY / window.innerHeight) * 100;
+// Creative: Animated gradient background that follows mouse (throttled)
+let mouseX = 50;
+let mouseY = 50;
+let mouseTicking = false;
 
-    document.body.style.background = `
-        radial-gradient(circle at ${x}% ${y}%,
-            rgba(255, 255, 255, 0.02) 0%,
-            rgba(0, 0, 0, 1) 50%)
-    `;
+document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth) * 100;
+    mouseY = (e.clientY / window.innerHeight) * 100;
+
+    if (!mouseTicking) {
+        requestAnimationFrame(() => {
+            document.body.style.background = `
+                radial-gradient(circle at ${mouseX}% ${mouseY}%,
+                    rgba(255, 255, 255, 0.02) 0%,
+                    rgba(0, 0, 0, 1) 50%)
+            `;
+            mouseTicking = false;
+        });
+        mouseTicking = true;
+    }
 });
 
 // Creative: Text glitch effect on hero title
@@ -391,14 +413,21 @@ skillTags.forEach((tag, index) => {
     }, 100 + index * 30);
 });
 
-// Creative: Parallax effect on section backgrounds
+// Creative: Parallax effect on section backgrounds (throttled)
+let parallaxTicking = false;
 window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach((section, index) => {
-        const speed = (index % 2 === 0) ? 0.5 : -0.3;
-        const yPos = -(window.pageYOffset * speed);
-        section.style.backgroundPosition = `center ${yPos}px`;
-    });
+    if (!parallaxTicking) {
+        requestAnimationFrame(() => {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                const speed = (index % 2 === 0) ? 0.5 : -0.3;
+                const yPos = -(window.pageYOffset * speed);
+                section.style.transform = `translateY(${yPos}px)`;
+            });
+            parallaxTicking = false;
+        });
+        parallaxTicking = true;
+    }
 });
 
 // Creative: Timeline items reveal with draw effect
@@ -424,35 +453,44 @@ document.querySelectorAll('.project-card, .education-card, .soft-skill-card').fo
     });
 });
 
-// Creative: Text reveal on scroll
-document.querySelectorAll('p, li, h3, h4').forEach(element => {
-    const text = element.textContent;
-    if (text && text.length < 200) { // Only for shorter texts to avoid performance issues
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.dataset.revealed) {
-                    entry.target.style.opacity = '0';
-                    setTimeout(() => {
-                        entry.target.style.transition = 'opacity 0.8s ease-out';
-                        entry.target.style.opacity = '1';
-                        entry.target.dataset.revealed = 'true';
-                    }, 50);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        observer.observe(element);
-    }
+// Creative: Text reveal on scroll (optimized)
+const textRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.revealed) {
+            entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            entry.target.dataset.revealed = 'true';
+            textRevealObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
 });
 
-// Creative: Dynamic particle color based on scroll position
+// Only observe direct content elements, not every single text node
+document.querySelectorAll('.about-text p, .timeline-content, .education-card, .project-card, .soft-skill-card').forEach(element => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    textRevealObserver.observe(element);
+});
+
+// Creative: Dynamic particle color based on scroll position (throttled)
 let hueRotation = 0;
+let ticking = false;
+
 window.addEventListener('scroll', () => {
-    hueRotation = (window.pageYOffset / 10) % 360;
-    const canvas = document.getElementById('particle-canvas');
-    if (canvas) {
-        canvas.style.filter = `hue-rotate(${hueRotation}deg) brightness(1.2)`;
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            hueRotation = (window.pageYOffset / 10) % 360;
+            const canvas = document.getElementById('particle-canvas');
+            if (canvas) {
+                canvas.style.filter = `hue-rotate(${hueRotation}deg) brightness(1.2)`;
+            }
+            ticking = false;
+        });
+        ticking = true;
     }
 });
 

@@ -1046,6 +1046,38 @@ footer p {
 }
 
 /* ================================
+   Performance Optimizations
+   ================================ */
+
+/* GPU acceleration for animated elements */
+.timeline-content,
+.education-card,
+.project-card,
+.soft-skill-card,
+.btn,
+.tag,
+.skill-tag,
+.stat-number,
+.section-title {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Smooth text rendering */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Hardware acceleration for animations */
+@keyframes hardwareAccelerated {
+    0% { transform: translateZ(0); }
+    100% { transform: translateZ(0); }
+}
+
+/* ================================
    Creative Enhancements
    ================================ */
 
