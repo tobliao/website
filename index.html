@@ -32,6 +32,19 @@
                 <span class="lang-divider">/</span>
                 <button class="lang-btn" data-lang="zh">中</button>
             </div>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
         </div>
     </nav>
 
@@ -494,13 +507,52 @@
                 <div class="cta-box">
                     <h3 class="lang-text" data-en="Let's Connect!" data-zh="讓我們聯繫！">Let's Connect!</h3>
                     <p class="lang-text" data-en="I'm always interested in discussing verification methodologies, networking technologies, and innovative projects." data-zh="我樂於討論驗證方法、網路技術與創新專案。">I'm always interested in discussing verification methodologies, networking technologies, and innovative projects.</p>
-                    <a href="mailto:tobliao@cisco.com" class="btn btn-primary lang-text" data-en="Send Email" data-zh="發送郵件">Send Email</a>
+
+                    <!-- Time Zone Clocks -->
+                    <div class="timezone-clocks">
+                        <div class="timezone-item">
+                            <span class="timezone-location">🇹🇼 Taipei</span>
+                            <span class="timezone-time" data-timezone="Asia/Taipei">--:--</span>
+                        </div>
+                        <div class="timezone-item">
+                            <span class="timezone-location">🇭🇰 Hong Kong</span>
+                            <span class="timezone-time" data-timezone="Asia/Hong_Kong">--:--</span>
+                        </div>
+                        <div class="timezone-item">
+                            <span class="timezone-location">🇺🇸 San Jose</span>
+                            <span class="timezone-time" data-timezone="America/Los_Angeles">--:--</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 1rem; opacity: 0.7;" class="lang-text" data-en="Available for global collaboration" data-zh="開放全球協作">Available for global collaboration</p>
+
+                    <!-- Contact Form -->
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <input type="text" name="name" required placeholder=" " class="form-input">
+                            <label class="form-label lang-text" data-en="Name" data-zh="姓名">Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" required placeholder=" " class="form-input">
+                            <label class="form-label lang-text" data-en="Email" data-zh="電子郵件">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" required placeholder=" " rows="4" class="form-input"></textarea>
+                            <label class="form-label lang-text" data-en="Message" data-zh="訊息">Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary lang-text" data-en="Send Message" data-zh="發送訊息">Send Message</button>
+                    </form>
+
+                    <p style="font-size: 0.85rem; margin-top: 1.5rem; opacity: 0.6;" class="lang-text" data-en="Or email directly: tobliao@cisco.com" data-zh="或直接寄信：tobliao@cisco.com">Or email directly: tobliao@cisco.com</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/timezone.js"></script>
+    <script src="js/contact-form.js"></script>
     <script src="js/particles.js"></script>
     <script src="js/terminal.js"></script>
     <script src="js/language.js"></script>
